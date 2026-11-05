@@ -32,3 +32,12 @@ Les fichiers vidéo dépassent la limite de 100 Mo de GitHub ; ils sont publiés
 
 Animation 100 % code (Remotion / React), narration IA (Gemini TTS via OpenRouter),
 musique IA (Lyria 3 Pro), effets sonores synthétisés en Python.
+
+## Autres vidéos
+
+Publiées dans la [**Release v1.1**](../../releases/tag/v1.1) :
+
+| Fichier | Contenu |
+|---|---|
+| `Divergence-Branches.fr.mp4` | Divergence des branches (FR) |
+| `FF01-Branches-BigBang.fr.mp4` | FF01 — Branches et intégration « Big Bang » (FR) |
