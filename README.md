@@ -44,12 +44,20 @@ Publiées dans la [**Release v1.1**](../../releases/tag/v1.1) :
 
 ## FF02 — Déployer, puis activer (feature flags avec LaunchDarkly)
 
-Vidéo d'introduction (≈ 1 min 43, 1080p30, français) destinée aux non-développeurs. Un logiciel inchangé et une
-valeur de flag qui change donnent un comportement différent, sans nouveau déploiement. Sources, scénario,
-storyboard, rapport QA et commandes de rendu : [`FF02-LaunchDarkly/`](FF02-LaunchDarkly/README.md).
+Vidéo d'introduction (≈ 1 min 43, 1080p30, français) destinée aux non-développeurs : un logiciel inchangé et une
+valeur de flag qui change donnent un comportement différent, sans nouveau déploiement.
+Fichier : [`videos/FF02-FeatureFlags-LaunchDarkly.fr.mp4`](videos/FF02-FeatureFlags-LaunchDarkly.fr.mp4).
 
-| Fichier | Contenu |
-|---|---|
-| `FF02-FeatureFlags-LaunchDarkly.fr.mp4` | Master (H.264, AAC 256 kb/s, −16 LUFS) |
-| `FF02-FeatureFlags-LaunchDarkly.fr.captioned.mp4` | Sous-titres incrustés |
-| `FF02-FeatureFlags-LaunchDarkly.fr.srt` | Sous-titres français synchronisés au mot |
+## 📁 Vidéos dans le dépôt (`videos/`)
+
+Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
+
+| Fichier | Résolution | Contenu |
+|---|---|---|
+| [`QA-QC-Waterfall.fr.720p.mp4`](videos/QA-QC-Waterfall.fr.720p.mp4) | 720p | UPSTREAM — QA & QC en Waterfall (FR) |
+| [`Divergence-Branches.fr.720p.mp4`](videos/Divergence-Branches.fr.720p.mp4) | 720p | Divergence des branches (FR) |
+| [`FF01-Branches-BigBang.fr.720p.mp4`](videos/FF01-Branches-BigBang.fr.720p.mp4) | 720p | FF01 — Branches et intégration « Big Bang » (FR) |
+| [`FF02-FeatureFlags-LaunchDarkly.fr.mp4`](videos/FF02-FeatureFlags-LaunchDarkly.fr.mp4) | 1080p | FF02 — Déployer, puis activer (FR) |
+
+Les versions 720p sont réencodées depuis les masters 1080p (H.264, AAC 128 kb/s). Les masters pleine
+résolution restent dans les Releases v1.0 et v1.1.

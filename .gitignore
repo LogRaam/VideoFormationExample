@@ -1,5 +1,7 @@
-# Vidéos publiées dans les Releases GitHub (limite de 100 Mo par fichier)
+# Masters pleine résolution : publiés dans les Releases GitHub (limite de 100 Mo par fichier).
+# Les versions allégées (< 100 Mo) du dossier videos/ sont versionnées.
 *.mp4
+!videos/*.mp4
 
 # Projets de production vidéo : intermédiaires, dépendances, secrets
 build/
