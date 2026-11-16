@@ -1,0 +1,121 @@
+1
+00:00:01,600 --> 00:00:04,270
+Voici l'application de votre banque et son
+tableau de bord.
+
+2
+00:00:05,270 --> 00:00:06,670
+Une équipe en développe un nouveau.
+
+3
+00:00:06,710 --> 00:00:11,100
+Une fois prêt, sa branche est fusionnée
+dans la branche principale.
+
+4
+00:00:12,390 --> 00:00:14,560
+Le voilà dans le logiciel.
+
+5
+00:00:15,590 --> 00:00:19,230
+Au passage, les développeurs l'ont relié à
+un feature flag,
+
+6
+00:00:19,280 --> 00:00:21,570
+un indicateur de fonctionnalité.
+
+7
+00:00:22,340 --> 00:00:25,720
+La nouvelle version est déployée en
+production, avec les deux tableaux de bord.
+
+8
+00:00:27,010 --> 00:00:28,460
+Mais le flag est désactivé :
+
+9
+00:00:28,500 --> 00:00:30,530
+les clients voient toujours l'ancien.
+
+10
+00:00:31,050 --> 00:00:34,240
+La fonctionnalité est là… mais elle dort.
+
+11
+00:00:35,750 --> 00:00:39,160
+Ce flag se pilote à l'extérieur de
+l'application, dans LaunchDarkly.
+
+12
+00:00:40,090 --> 00:00:42,430
+La personne responsable du produit
+l'active.
+
+13
+00:00:43,570 --> 00:00:47,040
+LaunchDarkly transmet la nouvelle
+configuration à l'application,
+
+14
+00:00:47,080 --> 00:00:48,830
+qui la garde en mémoire.
+
+15
+00:00:49,770 --> 00:00:53,490
+Quand un client ouvre son tableau de bord,
+l'application évalue le flag :
+
+16
+00:00:53,530 --> 00:00:55,980
+activé. Elle affiche le nouveau.
+
+17
+00:00:57,110 --> 00:00:58,850
+Le logiciel n'a pas changé.
+
+18
+00:00:58,890 --> 00:01:01,440
+Seule la configuration a changé.
+
+19
+00:01:03,750 --> 00:01:05,820
+Un problème ? On désactive le flag.
+
+20
+00:01:07,480 --> 00:01:11,440
+À la prochaine évaluation, l'application
+revient à l'ancien tableau de bord.
+
+21
+00:01:11,480 --> 00:01:13,950
+Même version, aucun redéploiement.
+
+22
+00:01:15,200 --> 00:01:19,700
+Retenez deux étapes. Développer,
+fusionner, déployer :
+
+23
+00:01:19,740 --> 00:01:22,390
+la fonctionnalité entre dans
+l'application.
+
+24
+00:01:23,570 --> 00:01:27,350
+Configurer dans LaunchDarkly, évaluer,
+choisir le comportement :
+
+25
+00:01:27,390 --> 00:01:29,200
+on décide quand elle s'active.
+
+26
+00:01:33,190 --> 00:01:36,020
+Le déploiement met la fonctionnalité dans
+l'application.
+
+27
+00:01:36,060 --> 00:01:39,390
+Le feature flag permet de contrôler son
+activation.

@@ -1,0 +1,4 @@
+{
+ "comment": "Where the deployed software sits in the frame (camera at scale 1) and its size. Read by the stage and by tools/qa_invariance.py.",
+ "box": {"x": 730, "y": 330, "w": 460, "h": 440}
+}

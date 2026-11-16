@@ -41,3 +41,15 @@ Publiées dans la [**Release v1.1**](../../releases/tag/v1.1) :
 |---|---|
 | `Divergence-Branches.fr.mp4` | Divergence des branches (FR) |
 | `FF01-Branches-BigBang.fr.mp4` | FF01 — Branches et intégration « Big Bang » (FR) |
+
+## FF02 — Déployer, puis activer (feature flags avec LaunchDarkly)
+
+Vidéo d'introduction (≈ 1 min 43, 1080p30, français) destinée aux non-développeurs. Un logiciel inchangé et une
+valeur de flag qui change donnent un comportement différent, sans nouveau déploiement. Sources, scénario,
+storyboard, rapport QA et commandes de rendu : [`FF02-LaunchDarkly/`](FF02-LaunchDarkly/README.md).
+
+| Fichier | Contenu |
+|---|---|
+| `FF02-FeatureFlags-LaunchDarkly.fr.mp4` | Master (H.264, AAC 256 kb/s, −16 LUFS) |
+| `FF02-FeatureFlags-LaunchDarkly.fr.captioned.mp4` | Sous-titres incrustés |
+| `FF02-FeatureFlags-LaunchDarkly.fr.srt` | Sous-titres français synchronisés au mot |

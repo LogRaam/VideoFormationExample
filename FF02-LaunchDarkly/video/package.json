@@ -1,0 +1,28 @@
+{
+  "name": "ff02-launchdarkly-video",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Code-driven explainer: feature flags with LaunchDarkly (FR-CA)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Main ../build/renders/final.mp4",
+    "still": "remotion still"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.532",
+    "@remotion/google-fonts": "4.0.532",
+    "@remotion/media-utils": "4.0.532",
+    "@remotion/noise": "4.0.532",
+    "@remotion/paths": "4.0.532",
+    "@remotion/shapes": "4.0.532",
+    "@remotion/transitions": "4.0.532",
+    "lucide-react": "^1.49.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.532"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.0",
+    "typescript": "5.8.3"
+  }
+}
