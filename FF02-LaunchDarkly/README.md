@@ -49,7 +49,7 @@ python finalize.py ../build/renders/final.mp4 fr   # mastering R128 + version so
 Contrôle qualité :
 
 ```bash
-python tools/qa_invariance.py                       # le logiciel est identique au pixel près (activation / retour)
+python tools/qa_invariance.py                       # balayage : logiciel identique au pixel près (≈10 min)
 python tools/qa_audio.py output/FF02-FeatureFlags-LaunchDarkly.fr.mp4
 cd video && node stills.mjs ../build/stills/x 12.5 47 59.5 && cd .. && python tools/sheet.py build/stills/x
 python -m unittest discover -s tests                # les maps sont à jour

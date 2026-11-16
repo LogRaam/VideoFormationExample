@@ -16,20 +16,20 @@ Toutes les vérifications portent sur les fichiers réellement rendus (`output/*
 
 ## Invariance du logiciel déployé (critère 8)
 
-`python tools/qa_invariance.py` produit trois images PNG sans perte en pleine résolution, recadre le logiciel (730,330 → 1190,770) et compare les pixels à l'intérieur de sa forme arrondie :
+`python tools/qa_invariance.py` produit des images PNG sans perte en pleine résolution **toutes les 0,25 s**, d'une seconde avant la bascule ON jusqu'à la fin du retour en arrière (40,7 s → 73,9 s, soit 133 images, caméra verrouillée). Il recadre le logiciel (position lue dans `video/src/data/layout.json`, le même fichier que la scène) et compare chaque image à la première, à l'intérieur de sa forme arrondie :
 
 ```
-before activation (flag off, old dashboard)        max diff 0, pixels changed 0
-after activation (flag on, new dashboard shown)    max diff 0, pixels changed 0
-after roll-back (flag off, old dashboard again)    max diff 0, pixels changed 0
-IDENTICAL
+software box crop (730, 330, 1190, 770), 133 frames every 0.25 s, reference =  40.68 s
+IDENTICAL over the whole sweep (within 4/255 anti-aliasing)
 ```
 
 Le code garantit aussi cette invariance : le composant `AppBox` ne reçoit aucune propriété liée au flag ou à l'utilisateur. La caméra reste verrouillée de la bascule ON jusqu'à la fin du retour en arrière.
 
 **Défaut trouvé par ce test, puis corrigé :** au moment « Seule la configuration a changé », la lueur violette de l'étiquette « En mémoire » débordait sur le haut du logiciel. Le logiciel semblait donc changer à l'instant précis où la narration affirme le contraire. La lueur a été réduite et remplacée par un contour sur l'étiquette elle-même.
 
-Tolérance documentée : jusqu'à 2/255 sur l'anticrénelage des bords. Une passe a montré 21 pixels à ±1–2 sur un bord de carte, ce qui est invisible. La passe finale montre 0 pixel.
+**Deuxième défaut, plus important :** la première version vérifiait seulement trois instants de repos. Or, à chaque évaluation, une surcouche (chemin violet de la mémoire vers l'aiguillage, anneau, tracé sarcelle, cadre sur le module choisi) se dessinait *sur* le logiciel pendant environ 1,5 s, alors que le plan exige un logiciel identique pendant toute la séquence. Le repère d'évaluation a été déplacé à l'extérieur : l'étiquette mémoire pulse et un chevron sarcelle s'allume à droite du cadre, sur la sortie choisie. Tout ce qui circule près du logiciel (paquet, points de requête et de réponse, lueurs) est désormais dessiné *sous* lui, et son opacité masque ce qui pourrait déborder. Le test est devenu un balayage continu.
+
+Tolérance mesurée et documentée : 1 ou 2 pixels isolés à 3–4/255 (bruit de rastérisation du navigateur, invisible). Le contour extérieur anticrénelé (2 px) et les coins sont exclus, car on y voit ce qui passe derrière le cadre.
 
 ## Inspection visuelle
 
@@ -58,15 +58,21 @@ Chaque événement visuel est ancré sur un mot de la narration (horodatage au m
 - Fenêtre la plus proche : −2,2 dB (transitoire bref du « ping » d'arrivée).
 - Trois passes de correction ont été nécessaires. Au départ, des whoosh, un impact sourd, des pops et le ping d'arrivée dépassaient la voix de jusqu'à +3,6 dB ; leurs gains ont été réduits.
 
-Aucune prise de narration ne dérive du texte selon la vérification Whisper : un seul écart (taux d'erreur de 8 % sur f3, « garde à mémoire ») ; c'est l'autre prise, exacte, qui a été retenue.
+Vérification Whisper des prises : une seule prise s'écartait du texte (f3, prise 2 : « garde à mémoire », 8 % d'erreur). C'est l'autre prise, exacte, qui a été retenue. Toutes les prises retenues correspondent au texte.
 
 ## Limites et écarts, en toute franchise
 
 1. **Accent québécois non vérifié par un modèle audio.** La clé OpenRouter n'avait plus que ≈ 0,26 $ de crédit (limite de 20 $ atteinte). Les modèles de jugement audio et vidéo exigent un solde d'au moins 0,50 $ et ont été refusés (HTTP 402). Conséquences :
-   - La voix est celle de la vidéo précédente de la série (Gemini TTS « Algieba »), avec une consigne de style « français du Québec, accent québécois naturel ». Je n'ai pas pu confirmer par écoute automatisée que l'accent est perçu comme québécois. Gemini TTS ne propose pas de paramètre de langue fr-CA : l'accent repose uniquement sur la consigne de style.
+   - La voix est celle de la vidéo précédente de la série (Gemini TTS « Algieba »), avec une consigne de style « français du Québec, accent québécois naturel ». Je n'ai pas pu confirmer par écoute automatisée que l'accent est perçu comme québécois.
+   - **Prise en charge vérifiée dans la documentation Google** ([Speech generation](https://aistudio.google.com/docs/speech-generation), consultée le 2026-11-16) :
+     - le tableau des langues mentionne « French », sans variante canadienne ni code fr-CA ;
+     - la langue est détectée automatiquement, et aucun paramètre de langue n'existe à la génération ;
+     - Google déconseille explicitement de changer l'accent par la consigne de style (« Avoid putting […] permanent accent changes in speech_metadata.style »). Il recommande plutôt une voix régionale de l'*Extended Voice Library* (filtrable par code BCP-47) ou une voix créée par *Voice design*.
+     - La consigne de style utilisée ici n'est donc **pas un moyen garanti** d'obtenir un accent québécois.
+   - Piste pour une V2 : interroger la Voice Library (`GET /v1beta/voices`, filtre `language_code: ["fr-CA"]`). Il faut un accès direct à l'API Gemini, car je n'ai pas vérifié qu'OpenRouter expose ces voix étendues.
    - Le choix entre les deux prises s'est fait sur le critère Whisper (fidélité au texte), sans le juge audio du pipeline précédent.
    - La revue créative par un modèle vidéo (`tools/review_video.py`) n'a pas pu être lancée. La revue visuelle a été faite image par image (voir ci-dessus).
-   - **À faire par une personne :** écouter la narration (accent, prononciation de « LaunchDarkly » et « feature flag »). Si besoin, augmenter la limite de la clé puis relancer `python tools/tts_build.py --takes 3` (sans `--no-judge`) pour activer le juge.
+   - **À faire par une personne :** écouter la narration, en priorité de 0:35 à 0:49 (« LaunchDarkly » deux fois, phrases clés), puis de 0:15 à 0:22 (« feature flag »). Points à vérifier : l'accent et la prononciation de « LaunchDarkly » et « feature flag ». Si besoin, augmenter la limite de la clé puis relancer `python tools/tts_build.py --takes 3` (sans `--no-judge`) pour activer le juge.
 2. **Musique réutilisée.** Pour la même raison, aucune nouvelle musique Lyria n'a été générée. Les pistes `explain` et `finale` proviennent de la vidéo FF01 de la même série (générées par Lyria 3 Pro pour ce parcours), ce qui assure une cohérence sonore entre les modules.
 3. **Les MP4 ne sont pas versionnés** (`*.mp4` dans `.gitignore` : fichiers trop lourds pour Git, publiés en Release comme les autres vidéos). Ils se trouvent dans `output/` en local et se reconstruisent avec les commandes du README.
 4. Le tableau de bord représenté est servi par le serveur (SDK serveur, évaluation locale). Le cas d'un SDK client n'est pas montré ; voir `01-recherche-technique.md`.

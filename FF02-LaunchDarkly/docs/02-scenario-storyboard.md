@@ -47,10 +47,10 @@ Source de vérité : `script/narration.fr.json` (texte, pauses) et `video/src/li
 | 0:35.2 | « Ce flag se pilote à l'extérieur de l'application, dans LaunchDarkly. » | La caméra recule et LaunchDarkly glisse à gauche. Trois colonnes : CONFIGURATION · LOGICIEL DÉPLOYÉ · CE QUE VOIT LE CLIENT. Un lien pointillé violet relie LaunchDarkly à l'étiquette mémoire | souffle grave |
 | 0:40.1 | « La personne responsable du produit l'active. » | L'avatar « Responsable du produit » apparaît ; le curseur clique sur l'interrupteur, qui passe à « Activé » | clic d'interrupteur |
 | 0:43.6 | « LaunchDarkly transmet la nouvelle configuration à l'application, qui la garde en mémoire. » | Un paquet violet voyage sur le lien ; l'étiquette devient « Flag : activé ». **Le téléphone, déjà ouvert, ne change pas** | envoi, ping |
-| 0:49.8 | « Quand un client ouvre son tableau de bord, l'application évalue le flag : activé. Elle affiche le nouveau. » | Toucher sur le téléphone, chargement, requête vers l'application (pas vers LaunchDarkly). Un point violet descend de la mémoire à l'aiguillage, le chemin sarcelle mène au nouveau module, la réponse suit la voie basse et le nouveau tableau glisse à l'écran | tic, souffle rapide |
+| 0:49.8 | « Quand un client ouvre son tableau de bord, l'application évalue le flag : activé. Elle affiche le nouveau. » | Toucher sur le téléphone, chargement, requête vers l'application (pas vers LaunchDarkly). L'étiquette mémoire pulse (l'application lit la valeur qu'elle détient), un chevron sarcelle s'allume **à l'extérieur** du logiciel, sur la sortie du nouveau module, la réponse suit la voie basse et le nouveau tableau glisse à l'écran | tic, souffle rapide |
 | 0:57.1 | « Le logiciel n'a pas changé. Seule la configuration a changé. » | Crochets autour du logiciel, pastille « Version 2.0 · inchangée » ; l'interrupteur, le lien et l'étiquette s'illuminent en violet. Légende en haut : « On change la configuration, pas le logiciel. » | carillon discret |
 
-**Message :** on change la configuration, pas le logiciel. Le logiciel reste identique au pixel près pendant toute la séquence (voir le rapport QA).
+**Message :** on change la configuration, pas le logiciel. Aucun élément n'est dessiné sur le logiciel pendant S3 et S4 : tous les repères (paquet, mémoire, évaluation, réponse) restent à l'extérieur de son cadre. Il reste identique au pixel près de la bascule jusqu'à la fin du retour en arrière (voir le rapport QA).
 
 ### S4 — Revenir en arrière (1:03–1:14)
 
@@ -58,7 +58,7 @@ Source de vérité : `script/narration.fr.json` (texte, pauses) et `video/src/li
 |---|---|---|---|
 | 1:03.0 | — | Bandeau corail « Solde erroné ! » sur le nouveau tableau, halo corail autour du téléphone | alerte |
 | 1:03.8 | « Un problème ? On désactive le flag. » | Le curseur désactive l'interrupteur ; le paquet voyage ; l'étiquette repasse à « désactivé ». L'écran ouvert ne change pas encore | clic, envoi, ping |
-| 1:07.5 | « À la prochaine évaluation, l'application revient à l'ancien tableau de bord. Même version, aucun redéploiement. » | Nouvelle ouverture : évaluation, chemin vers le module actuel, l'ancien tableau revient. Pastille « Même version · aucun redéploiement » | tic, souffle, carillon discret |
+| 1:07.5 | « À la prochaine évaluation, l'application revient à l'ancien tableau de bord. Même version, aucun redéploiement. » | Nouvelle ouverture : l'étiquette pulse, le chevron s'allume sur la sortie du module actuel, l'ancien tableau revient. Pastille « Même version · aucun redéploiement » | tic, souffle, carillon discret |
 
 **Message :** le comportement se contrôle sans remplacer la version du logiciel. Rien n'est « annulé » : seules les évaluations suivantes changent.
 

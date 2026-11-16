@@ -97,7 +97,7 @@ _Audio QA of a render: peak, and how far the music + effects bed sits under the_
 
 ### tools/qa_invariance.py
 
-_Acceptance check 8: the deployed software is pixel-identical before the flag is_
+_Acceptance check 8: the deployed software stays pixel-identical while the flag_
 
 | name | kind | doc |
 |---|---|---|
@@ -408,7 +408,6 @@ _(no top-level declarations)_
 | `BRANCH_OUT` | array |  |  |
 | `BRANCH_IN` | array |  |  |
 | `CARD_PATH` | array |  |  |
-| `FROM_JUNCTION` | function |  |  |
 | `CAM0` | object |  |  |
 | `camKeys` | function |  |  |
 | `fadeIO` | function |  |  |

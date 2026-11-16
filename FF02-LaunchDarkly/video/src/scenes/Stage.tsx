@@ -36,7 +36,6 @@ const BRANCH_OUT: Bez = [{x: 40, y: MAIN_Y}, {x: 100, y: MAIN_Y}, {x: 70, y: 440
 const BRANCH_IN: Bez = [{x: 290, y: 440}, {x: 350, y: 440}, {x: 320, y: MAIN_Y}, {x: 392, y: MAIN_Y}];
 const CARD_PATH: Bez = [{x: 210, y: 388}, {x: 360, y: 388}, {x: 330, y: PKG.y + ROW_B_Y * PKG.s}, {x: PKG.x + (ROW_X + (BOX_W - ROW_X - 26) / 2) * PKG.s, y: PKG.y + ROW_B_Y * PKG.s}];
 
-const FROM_JUNCTION = (rowY: number) => `M${JUNCTION.x + 22},${JUNCTION.y} C${JUNCTION.x + 40},${JUNCTION.y} ${JUNCTION.x + 22},${rowY} ${ROW_X},${rowY}`;
 
 // ---- camera -----------------------------------------------------------------
 const CAM0 = {s: 1.55, cx: PHONE.x + PHONE_W / 2, cy: 540};
@@ -166,10 +165,11 @@ export const Stage: React.FC = () => {
   // evaluation in progress
   const ev = EVALS.find((e) => t >= e.tap - 0.05 && t <= e.show + 2.4);
   const evalO = ev ? fadeIO(t, ev.ev - 0.05, ev.show + (ev.fast ? 0.3 : 1.2), 0.15, 0.5) : 0;
+  const evalPulse = ev ? Math.max(0, env(t, ev.ev - 0.05, ev.ev + (ev.fast ? 0.3 : 0.7), 0.15, 0.4)) : 0;
 
   // S2 / S3 / S4 overlays
   const bothO = fadeIO(t, Q.bothDash - 0.1, Q.bothDash + 1.8, 0.3, 0.5);
-  const sleepO = fadeIO(t, Q.asleep - 0.4, Q.reveal + 1.4, 0.5, 0.6);
+  const sleepO = fadeIO(t, Q.asleep - 0.4, Q.reveal, 0.5, 0.6);
   const offPulse = env(t, Q.flagOff - 0.1, Q.flagOff + 1.2, 0.2, 0.6);
   const unchangedO = fadeIO(t, Q.unchanged - 0.1, Q.bug - 0.2, 0.4, 0.5);
   const configGlow = env(t, Q.onlyConfig - 0.2, Q.bug - 0.3, 0.3, 0.5);
@@ -237,87 +237,6 @@ export const Stage: React.FC = () => {
           <Label size={20} color={C.softGlow} weight={600} style={{position: 'absolute', left: 112, top: 214 - devFocus * 14}}>Développeurs</Label>
         </div>
 
-        {/* new dashboard module being built on the branch, then merged */}
-        {cardBuild > 0 && !merged && (() => {
-          const pos = bez(CARD_PATH, cardTravel);
-          const s = lerp(0.75, PKG.s, cardTravel);
-          return (
-            <div style={{position: 'absolute', left: pos.x, top: pos.y, transform: `translate(-50%, -50%) scale(${s * (0.6 + 0.4 * cardBuild)})`, opacity: Math.min(1, cardBuild * 1.5) * gitO}}>
-              <div style={{width: BOX_W - ROW_X - 26, height: 84, borderRadius: 14, background: C.panelHi, border: `2px solid ${C.beh}`, boxShadow: `0 0 30px ${C.beh}55`, display: 'flex', alignItems: 'center', gap: 16, padding: '0 14px', boxSizing: 'border-box'}}>
-                <div style={{clipPath: `inset(0 ${100 - cardBuild * 100}% 0 0)`}}>
-                  <Thumb kind="new" w={96} />
-                </div>
-                <div style={{fontFamily: fonts.body, fontSize: 21, fontWeight: 600, color: C.text, lineHeight: 1.2, opacity: p(t, Q.build + 0.6, 0.6)}}>Nouveau tableau de bord</div>
-              </div>
-            </div>
-          );
-        })()}
-
-        {/* version 1.0 currently in production (replaced at deployment) */}
-        {v1Exit < 1 && (
-          <div style={{position: 'absolute', left: BOX.x, top: BOX.y + 90 * v1Exit, opacity: (1 - v1Exit) * stageIn, transform: `scale(${1 - 0.1 * v1Exit})`}}>
-            <AppBox version="1.0" newIn={0} junction={0} />
-          </div>
-        )}
-
-        {/* the software package (version 2.0 after the merge), deployed into production */}
-        <div style={{position: 'absolute', left: pkg.x, top: pkg.y, transformOrigin: '0 0', transform: `scale(${pkg.s})`, opacity: pkgO}}>
-          <AppBox version={merged ? '2.0' : '1.0'} newIn={merged ? 1 : 0} junction={junction} />
-          {/* in-box highlights (S1 / S2 only; nothing is drawn over the box once the flag starts changing) */}
-          <div style={{position: 'absolute', left: 0, top: 0, width: BOX_W, height: BOX_H, borderRadius: 26, boxShadow: `inset 0 0 0 6px ${C.softGlow}`, opacity: env(t, Q.inSoftware - 0.2, Q.inSoftware + 1.4, 0.2, 0.8)}} />
-          {[ROW_A_Y, ROW_B_Y].map((y) => (
-            <div key={y} style={{position: 'absolute', left: ROW_X - 6, top: y - 48, width: BOX_W - ROW_X - 14, height: 96, borderRadius: 18, border: `4px solid ${C.softGlow}`, opacity: bothO}} />
-          ))}
-          <div style={{position: 'absolute', left: JUNCTION.x - 36, top: JUNCTION.y - 36, width: 72, height: 72, borderRadius: '50%', border: `4px solid ${C.softGlow}`, opacity: env(t, Q.flagWired + 0.2, Q.flagWired + 1.6, 0.2, 0.6), transform: `scale(${1 + 0.4 * p(t, Q.flagWired + 0.2, 1.2)})`}} />
-          {sleepO > 0 && (
-            <div style={{position: 'absolute', left: ROW_X - 2, top: ROW_B_Y - 44, width: BOX_W - ROW_X - 22, height: 88, borderRadius: 15, background: `rgba(6,11,24,${0.62 * sleepO})`, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 18, boxSizing: 'border-box', gap: 6}}>
-              <div style={{opacity: sleepO, display: 'flex', alignItems: 'center', gap: 4}}>
-                {Icon.moon(30, C.sub)}
-                <span style={{fontFamily: fonts.head, fontSize: 24, fontWeight: 700, color: C.sub, transform: `translateY(${-6 * Math.sin(t * 2)}px)`}}>z</span>
-                <span style={{fontFamily: fonts.head, fontSize: 18, fontWeight: 700, color: C.sub, transform: `translateY(${-8 * Math.sin(t * 2 + 1)}px)`}}>z</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* memory tag: the flag value the application currently holds (outside the software box) */}
-        <div style={{position: 'absolute', left: tagX, top: tagY, transformOrigin: '0 0', transform: `scale(${pkg.s})`, opacity: tagO}}>
-          <div style={{position: 'absolute', left: TAG.w / 2 - 2, top: TAG.h, width: 4, height: -TAG.dy - TAG.h, background: C.conf, opacity: 0.7}} />
-          <div style={{width: TAG.w, height: TAG.h, borderRadius: 16, background: '#16123A', border: `3px solid ${C.conf}`, display: 'flex', alignItems: 'center', gap: 12, padding: '0 16px', boxSizing: 'border-box', boxShadow: `0 0 ${4 + 10 * Math.max(configGlow, arrival >= 0 ? 1 - arrival : 0)}px ${C.conf}${arrival >= 0 || configGlow > 0 ? 'CC' : '44'}`, outline: `${Math.round(3 * Math.max(configGlow, arrival >= 0 ? 1 - arrival : 0))}px solid ${C.confGlow}`}}>
-            {Icon.memory(28, C.conf)}
-            <span style={{fontFamily: fonts.body, fontSize: 22, fontWeight: 600, color: C.sub, whiteSpace: 'nowrap'}}>En mémoire</span>
-            <span style={{marginLeft: 'auto', fontFamily: fonts.body, fontSize: 22, fontWeight: 800, whiteSpace: 'nowrap', color: mem ? '#1A0F45' : C.text, background: mem ? C.confGlow : mix(C.off, C.bug, offPulse * 0), borderRadius: 20, padding: '4px 14px', transform: `scale(${1 + 0.12 * offPulse + (arrival >= 0 ? 0.15 * Math.sin(Math.min(1, arrival * 1.4) * Math.PI) : 0)})`}}>
-              Flag : {mem ? 'activé' : 'désactivé'}
-            </span>
-          </div>
-        </div>
-
-        {/* evaluation inside the application (transient overlay, faded out before any comparison point) */}
-        {ev && evalO > 0 && (() => {
-          const u = map(t, [ev.ev, ev.ev + (ev.fast ? 0.2 : 0.5)], [0, 1], ease.inOut);
-          const from = {x: BOX.x + TAG.dx + TAG.w / 2, y: BOX.y + TAG.dy + TAG.h};
-          const to = {x: BOX.x + JUNCTION.x, y: BOX.y + JUNCTION.y};
-          const route = map(t, [ev.ev + (ev.fast ? 0.15 : 0.45), ev.ev + (ev.fast ? 0.35 : 0.9)], [0, 1], ease.inOut);
-          const rowY = ev.v ? ROW_B_Y : ROW_A_Y;
-          const ring = p(t, ev.ev + (ev.fast ? 0.1 : 0.35), 0.8);
-          return (
-            <div style={{opacity: evalO}}>
-              <svg width={1920} height={1080} style={{position: 'absolute', left: 0, top: 0}}>
-                <path d={`M${from.x},${from.y} C${from.x},${from.y + 120} ${to.x + 80},${to.y - 100} ${to.x},${to.y}`} stroke={C.conf} strokeWidth={4} strokeDasharray="6 8" fill="none" opacity={0.8} />
-                <g transform={`translate(${BOX.x},${BOX.y})`}>
-                  <path d={FROM_JUNCTION(rowY)} stroke={C.beh} strokeWidth={8} fill="none" strokeLinecap="round" pathLength={1} strokeDasharray={`${route} 1`} />
-                </g>
-              </svg>
-              {u < 1 && (() => {
-                const q = bez([from, {x: from.x, y: from.y + 120}, {x: to.x + 80, y: to.y - 100}, to], u);
-                return <Dot x={q.x} y={q.y} c={C.conf} r={10} />;
-              })()}
-              <div style={{position: 'absolute', left: to.x - 34, top: to.y - 34, width: 68, height: 68, borderRadius: '50%', border: `5px solid ${C.confGlow}`, opacity: ring > 0 ? 1 - ring : 0, transform: `scale(${0.7 + ring * 1.2})`}} />
-              <div style={{position: 'absolute', left: BOX.x + ROW_X - 6, top: BOX.y + rowY - 48, width: BOX_W - ROW_X - 14, height: 96, borderRadius: 18, border: `5px solid ${C.beh}`, boxShadow: `0 0 30px ${C.beh}88`, opacity: route}} />
-            </div>
-          );
-        })()}
-
         {/* request from the phone and response to it */}
         {ev && (() => {
           const reqU = map(t, [ev.tap + 0.1, ev.tap + (ev.fast ? 0.3 : 0.7)], [0, 1], ease.inOut);
@@ -331,12 +250,6 @@ export const Stage: React.FC = () => {
             </>
           );
         })()}
-
-        {/* LaunchDarkly, outside the application */}
-        <div style={{position: 'absolute', left: lerp(-560, LD.x, ldIn), top: LD.y, opacity: ldIn}}>
-          <LDPanel k={sw} owner={ownerO} />
-          <div style={{position: 'absolute', left: LD_SWITCH.x - 64, top: LD_SWITCH.y - 44, width: 128, height: 88, borderRadius: 44, boxShadow: `0 0 50px ${C.conf}`, opacity: configGlow * 0.9}} />
-        </div>
 
         {/* the configuration link LaunchDarkly -> application, and the packet travelling on it */}
         <svg width={1920} height={1080} style={{position: 'absolute', left: 0, top: 0, opacity: linkDraw * ldIn * (1 - 0.0 * configGlow)}}>
@@ -356,6 +269,78 @@ export const Stage: React.FC = () => {
             </>
           );
         })()}
+
+        {/* evaluation result, shown OUTSIDE the software: a teal marker at the chosen output */}
+        {ev && evalO > 0 && (() => {
+          const rowY = ev.v ? ROW_B_Y : ROW_A_Y;
+          const k = p(t, ev.ev + (ev.fast ? 0.15 : 0.4), 0.35, ease.back);
+          return (
+            <div style={{position: 'absolute', left: BOX.x + BOX_W + 10, top: BOX.y + rowY - 22, width: 44, height: 44, borderRadius: 14, background: C.beh, boxShadow: `0 0 26px ${C.beh}`, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: evalO * Math.min(1, k * 1.5), transform: `scale(${0.4 + 0.6 * k})`}}>
+              <svg width={22} height={22} viewBox="0 0 22 22"><path d="M7 4l8 7-8 7" stroke="#04211C" strokeWidth={3.4} fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </div>
+          );
+        })()}
+
+        {/* version 1.0 currently in production (replaced at deployment) */}
+        {v1Exit < 1 && (
+          <div style={{position: 'absolute', left: BOX.x, top: BOX.y + 90 * v1Exit, opacity: (1 - v1Exit) * stageIn, transform: `scale(${1 - 0.1 * v1Exit})`}}>
+            <AppBox version="1.0" newIn={0} junction={0} />
+          </div>
+        )}
+
+        {/* the software package (version 2.0 after the merge), deployed into production */}
+        <div style={{position: 'absolute', left: pkg.x, top: pkg.y, transformOrigin: '0 0', transform: `scale(${pkg.s})`, opacity: pkgO}}>
+          <AppBox version={merged ? '2.0' : '1.0'} newIn={merged ? 1 : 0} junction={junction} />
+          {/* in-box highlights (S1 / S2 only; nothing is drawn over the box during S3 and S4) */}
+          <div style={{position: 'absolute', left: 0, top: 0, width: BOX_W, height: BOX_H, borderRadius: 26, boxShadow: `inset 0 0 0 6px ${C.softGlow}`, opacity: env(t, Q.inSoftware - 0.2, Q.inSoftware + 1.4, 0.2, 0.8)}} />
+          {[ROW_A_Y, ROW_B_Y].map((y) => (
+            <div key={y} style={{position: 'absolute', left: ROW_X - 6, top: y - 48, width: BOX_W - ROW_X - 14, height: 96, borderRadius: 18, border: `4px solid ${C.softGlow}`, opacity: bothO}} />
+          ))}
+          <div style={{position: 'absolute', left: JUNCTION.x - 36, top: JUNCTION.y - 36, width: 72, height: 72, borderRadius: '50%', border: `4px solid ${C.softGlow}`, opacity: env(t, Q.flagWired + 0.2, Q.flagWired + 1.6, 0.2, 0.6), transform: `scale(${1 + 0.4 * p(t, Q.flagWired + 0.2, 1.2)})`}} />
+          {sleepO > 0 && (
+            <div style={{position: 'absolute', left: ROW_X - 2, top: ROW_B_Y - 44, width: BOX_W - ROW_X - 22, height: 88, borderRadius: 15, background: `rgba(6,11,24,${0.62 * sleepO})`, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 18, boxSizing: 'border-box', gap: 6}}>
+              <div style={{opacity: sleepO, display: 'flex', alignItems: 'center', gap: 4}}>
+                {Icon.moon(30, C.sub)}
+                <span style={{fontFamily: fonts.head, fontSize: 24, fontWeight: 700, color: C.sub, transform: `translateY(${-6 * Math.sin(t * 2)}px)`}}>z</span>
+                <span style={{fontFamily: fonts.head, fontSize: 18, fontWeight: 700, color: C.sub, transform: `translateY(${-8 * Math.sin(t * 2 + 1)}px)`}}>z</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* new dashboard module being built on the branch, then merged */}
+        {cardBuild > 0 && !merged && (() => {
+          const pos = bez(CARD_PATH, cardTravel);
+          const s = lerp(0.75, PKG.s, cardTravel);
+          return (
+            <div style={{position: 'absolute', left: pos.x, top: pos.y, transform: `translate(-50%, -50%) scale(${s * (0.6 + 0.4 * cardBuild)})`, opacity: Math.min(1, cardBuild * 1.5) * gitO}}>
+              <div style={{width: BOX_W - ROW_X - 26, height: 84, borderRadius: 14, background: C.panelHi, border: `2px solid ${C.beh}`, boxShadow: `0 0 30px ${C.beh}55`, display: 'flex', alignItems: 'center', gap: 16, padding: '0 14px', boxSizing: 'border-box'}}>
+                <div style={{clipPath: `inset(0 ${100 - cardBuild * 100}% 0 0)`}}>
+                  <Thumb kind="new" w={96} />
+                </div>
+                <div style={{fontFamily: fonts.body, fontSize: 21, fontWeight: 600, color: C.text, lineHeight: 1.2, opacity: p(t, Q.build + 0.6, 0.6)}}>Nouveau tableau de bord</div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* memory tag: the flag value the application currently holds (outside the software box) */}
+        <div style={{position: 'absolute', left: tagX, top: tagY, transformOrigin: '0 0', transform: `scale(${pkg.s})`, opacity: tagO}}>
+          <div style={{position: 'absolute', left: TAG.w / 2 - 2, top: TAG.h, width: 4, height: -TAG.dy - TAG.h, background: C.conf, opacity: 0.7}} />
+          <div style={{width: TAG.w, height: TAG.h, borderRadius: 16, background: '#16123A', border: `3px solid ${C.conf}`, display: 'flex', alignItems: 'center', gap: 12, padding: '0 16px', boxSizing: 'border-box', boxShadow: `0 0 ${4 + 10 * Math.max(configGlow, arrival >= 0 ? 1 - arrival : 0, evalPulse)}px ${C.conf}${arrival >= 0 || configGlow > 0 || evalPulse > 0 ? 'CC' : '44'}`, outline: `${Math.round(3 * Math.max(configGlow, arrival >= 0 ? 1 - arrival : 0, evalPulse))}px solid ${C.confGlow}`}}>
+            {Icon.memory(28, C.conf)}
+            <span style={{fontFamily: fonts.body, fontSize: 22, fontWeight: 600, color: C.sub, whiteSpace: 'nowrap'}}>En mémoire</span>
+            <span style={{marginLeft: 'auto', fontFamily: fonts.body, fontSize: 22, fontWeight: 800, whiteSpace: 'nowrap', color: mem ? '#1A0F45' : C.text, background: mem ? C.confGlow : mix(C.off, C.bug, offPulse * 0), borderRadius: 20, padding: '4px 14px', transform: `scale(${1 + 0.12 * offPulse + (arrival >= 0 ? 0.15 * Math.sin(Math.min(1, arrival * 1.4) * Math.PI) : 0)})`}}>
+              Flag : {mem ? 'activé' : 'désactivé'}
+            </span>
+          </div>
+        </div>
+
+        {/* LaunchDarkly, outside the application */}
+        <div style={{position: 'absolute', left: lerp(-560, LD.x, ldIn), top: LD.y, opacity: ldIn}}>
+          <LDPanel k={sw} owner={ownerO} />
+          <div style={{position: 'absolute', left: LD_SWITCH.x - 64, top: LD_SWITCH.y - 44, width: 128, height: 88, borderRadius: 44, boxShadow: `0 0 50px ${C.conf}`, opacity: configGlow * 0.9}} />
+        </div>
 
         {/* the user's screen */}
         <div style={{position: 'absolute', left: PHONE.x, top: PHONE.y}}>
