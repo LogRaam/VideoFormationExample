@@ -92,6 +92,12 @@ Vidéo de formation (≈ 2 min 59, 720p30, français, sans musique) destinée au
 financière : ce que l'évolution AI-Native de SAFe change à leur rôle (équipes augmentées par l'IA, étape « Valider », gouvernance et éthique de l'IA), les 4 contraintes qu'elle impose et 5 leviers concrets.
 Fichier : [`videos/AINativeSAFe-Role-AQ.fr.mp4`](videos/AINativeSAFe-Role-AQ.fr.mp4).
 
+## Parcours AQ · Les méthodes — Épisode 8 : DevOps
+
+Vidéo de formation (≈ 2 min 41, 720p30, français, sans musique) destinée aux spécialistes AQ d'une organisation
+financière : ce que DevOps change à leur rôle (les contrôles vivent dans la chaîne de livraison, les preuves aussi), les 4 contraintes qu'il impose et 5 leviers concrets. Dernier épisode de la série.
+Fichier : [`videos/DevOps-Role-AQ.fr.mp4`](videos/DevOps-Role-AQ.fr.mp4).
+
 ## 📁 Vidéos dans le dépôt (`videos/`)
 
 Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
@@ -109,6 +115,7 @@ Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
 | [`Kanban-Role-AQ.fr.mp4`](videos/Kanban-Role-AQ.fr.mp4) | 720p | Parcours AQ 5 — Kanban : ce qu'il change au rôle AQ (FR) |
 | [`SAFe-Role-AQ.fr.mp4`](videos/SAFe-Role-AQ.fr.mp4) | 720p | Parcours AQ 6 — SAFe : ce qu'il change au rôle AQ (FR) |
 | [`AINativeSAFe-Role-AQ.fr.mp4`](videos/AINativeSAFe-Role-AQ.fr.mp4) | 720p | Parcours AQ 7 — AI-Native SAFe : ce qu'il change au rôle AQ (FR) |
+| [`DevOps-Role-AQ.fr.mp4`](videos/DevOps-Role-AQ.fr.mp4) | 720p | Parcours AQ 8 — DevOps : ce qu'il change au rôle AQ (FR) |
 
 Les versions 720p sont réencodées depuis les masters 1080p (H.264, AAC 128 kb/s). Les masters pleine
 résolution restent dans les Releases v1.0 et v1.1.
