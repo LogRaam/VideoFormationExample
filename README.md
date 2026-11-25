@@ -80,6 +80,12 @@ Vidéo de formation (≈ 2 min 36, 720p30, français, sans musique) destinée au
 financière : ce que Kanban change à leur rôle (pas de sprint : la qualité se lit dans le flux, la colonne des essais et sa limite), les 4 contraintes qu'il impose et 5 leviers concrets.
 Fichier : [`videos/Kanban-Role-AQ.fr.mp4`](videos/Kanban-Role-AQ.fr.mp4).
 
+## Parcours AQ · Les méthodes — Épisode 6 : SAFe
+
+Vidéo de formation (≈ 2 min 45, 720p30, français, sans musique) destinée aux spécialistes AQ d'une organisation
+financière : ce que SAFe change à leur rôle (plusieurs équipes dans un train de livraison agile : la qualité se joue aux frontières et à la démonstration du système), les 4 contraintes qu'il impose et 5 leviers concrets.
+Fichier : [`videos/SAFe-Role-AQ.fr.mp4`](videos/SAFe-Role-AQ.fr.mp4).
+
 ## 📁 Vidéos dans le dépôt (`videos/`)
 
 Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
@@ -95,6 +101,7 @@ Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
 | [`Agile-Role-AQ.fr.mp4`](videos/Agile-Role-AQ.fr.mp4) | 720p | Parcours AQ 3 — L'agilité : ce qu'elle change au rôle AQ (FR) |
 | [`Scrum-Role-AQ.fr.mp4`](videos/Scrum-Role-AQ.fr.mp4) | 720p | Parcours AQ 4 — Scrum : ce qu'il change au rôle AQ (FR) |
 | [`Kanban-Role-AQ.fr.mp4`](videos/Kanban-Role-AQ.fr.mp4) | 720p | Parcours AQ 5 — Kanban : ce qu'il change au rôle AQ (FR) |
+| [`SAFe-Role-AQ.fr.mp4`](videos/SAFe-Role-AQ.fr.mp4) | 720p | Parcours AQ 6 — SAFe : ce qu'il change au rôle AQ (FR) |
 
 Les versions 720p sont réencodées depuis les masters 1080p (H.264, AAC 128 kb/s). Les masters pleine
 résolution restent dans les Releases v1.0 et v1.1.
