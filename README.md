@@ -68,6 +68,12 @@ Vidéo de formation (≈ 2 min 46, 720p30, français, sans musique) destinée au
 financière : ce que l'agilité change à leur rôle (la qualité se construit dans l'équipe, à chaque itération), les 5 contraintes qu'elle impose et 6 leviers concrets.
 Fichier : [`videos/Agile-Role-AQ.fr.mp4`](videos/Agile-Role-AQ.fr.mp4).
 
+## Parcours AQ · Les méthodes — Épisode 4 : Scrum
+
+Vidéo de formation (≈ 2 min 55, 720p30, français, sans musique) destinée aux spécialistes AQ d'une organisation
+financière : ce que Scrum change à leur rôle (aucun titre d'AQ, la qualité passe par la définition de terminé et les événements du sprint), les 4 contraintes qu'il impose et 5 leviers concrets.
+Fichier : [`videos/Scrum-Role-AQ.fr.mp4`](videos/Scrum-Role-AQ.fr.mp4).
+
 ## 📁 Vidéos dans le dépôt (`videos/`)
 
 Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
@@ -81,6 +87,7 @@ Versions lisibles directement sur GitHub, chacune sous la limite de 100 Mo :
 | [`Cascade-Role-AQ.fr.mp4`](videos/Cascade-Role-AQ.fr.mp4) | 720p | Parcours AQ 1 — La cascade : ce qu'elle change au rôle AQ (FR) |
 | [`CycleV-Role-AQ.fr.mp4`](videos/CycleV-Role-AQ.fr.mp4) | 720p | Parcours AQ 2 — Le cycle en V : ce qu'il change au rôle AQ (FR) |
 | [`Agile-Role-AQ.fr.mp4`](videos/Agile-Role-AQ.fr.mp4) | 720p | Parcours AQ 3 — L'agilité : ce qu'elle change au rôle AQ (FR) |
+| [`Scrum-Role-AQ.fr.mp4`](videos/Scrum-Role-AQ.fr.mp4) | 720p | Parcours AQ 4 — Scrum : ce qu'il change au rôle AQ (FR) |
 
 Les versions 720p sont réencodées depuis les masters 1080p (H.264, AAC 128 kb/s). Les masters pleine
 résolution restent dans les Releases v1.0 et v1.1.
